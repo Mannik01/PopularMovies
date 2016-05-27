@@ -18,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment, new MovieThumbNailFragment())
+                .commit();
+
     }
 
     @Override
