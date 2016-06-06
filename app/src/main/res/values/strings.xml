@@ -2,4 +2,6 @@
     <string name="app_name">PopularMovies</string>
     <string name="action_settings">Settings</string>
     <string name="movie_fragment_activity">MovieThumbNailFragment</string>
+    <string name="title_activity_movie_detail">MovieDetail</string>
+    <string name="movie_name">Movie Name</string>
 </resources>
