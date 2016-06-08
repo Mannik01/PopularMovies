@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -36,48 +37,47 @@ public class MovieThumbNailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ArrayList<Integer> imageIds = new ArrayList<Integer>();
-
-        int[] testImages = {R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d, R.drawable.e, R.drawable.f,
-                R.drawable.g};
-        for(int i = 0; i < 7; i ++) {
-            imageIds.add(testImages[i]);
-        }
+        ArrayList<String> paths = new ArrayList<String>();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
-        ImageAdapter adapter = new ImageAdapter(getActivity(), imageIds);
+        ImageAdapter adapter = new ImageAdapter(getActivity(), paths);
         gridview.setAdapter(adapter);
         return rootView;
     }
 
-//    // class for optimization purpose
-//    class ViewHolder {
-//
-//        SquareImageView thumbnail;
-//
-//        public ViewHolder(View v) {
-//            thumbnail = (SquareImageView) v.findViewById(R.id.imageView);
-//        }
-//    }
 
-    class ImageAdapter extends ArrayAdapter {
+    class ImageAdapter extends BaseAdapter {
         Context context;
         LayoutInflater inflater;
-        ArrayList<Integer> imageIds;
+        ArrayList<String> pathList;
 
-        public ImageAdapter(Context c, ArrayList<Integer> imageIds) {
-            super(c, R.layout.grid_item_thumbnail, imageIds);
-            this.imageIds = imageIds;
+
+        public ImageAdapter(Context c, ArrayList<String> paths) {
+            this.pathList = paths;
             this.context = c;
             inflater = LayoutInflater.from(c);
-
         }
+
+        @Override
+        public int getCount() {
+            return pathList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            //ViewHolder holder = null;
 
             if(convertView == null) {
                 //LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -92,7 +92,8 @@ public class MovieThumbNailFragment extends Fragment {
             //holder.thumbnail.setImageResource(imageIds.get(position));
             Picasso
             .with(context)
-            .load(imageIds.get(position))
+            //.load(imageIds.get(position))
+            .load("http://api.themoviedb.org/3/movie/popular?api_key=THE_MOVIE_DB")
             .into((ImageView) convertView);
             return convertView;
         }

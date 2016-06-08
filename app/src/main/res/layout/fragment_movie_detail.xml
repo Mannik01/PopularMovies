@@ -41,7 +41,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/release_year"
         android:id="@+id/yearRelease"
         android:layout_alignTop="@+id/detailImage"
         android:layout_toRightOf="@+id/detailImage"
@@ -52,7 +52,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/movie_length"
         android:id="@+id/movieLength"
         android:layout_below="@+id/yearRelease"
         android:layout_alignLeft="@+id/yearRelease"
@@ -61,8 +61,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/user_rating"
         android:id="@+id/userRating"
+
         android:layout_below="@+id/movieLength"
         android:layout_alignLeft="@+id/movieLength"
         android:layout_alignStart="@+id/movieLength" />
@@ -70,7 +71,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/movie_plot"
         android:id="@+id/plot"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
