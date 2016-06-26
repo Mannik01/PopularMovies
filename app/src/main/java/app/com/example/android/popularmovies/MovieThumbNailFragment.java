@@ -94,6 +94,12 @@ public class MovieThumbNailFragment extends Fragment {
 //            populateView();
 //        }
         populateView();
+        if(sortType.equals("popularity")) {
+            getActivity().setTitle("Popular Movies");
+        }
+        else {
+            getActivity().setTitle("Highly Rated Movies");
+        }
         super.onResume();
     }
 
