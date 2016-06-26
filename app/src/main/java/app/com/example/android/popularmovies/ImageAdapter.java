@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by MandipSilwal on 6/13/16.
@@ -53,6 +54,10 @@ public class ImageAdapter extends BaseAdapter {
         }
     }
 
+    public void setData(ArrayList<String> urls) {
+        paths.clear();
+        paths.addAll(urls);
+    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = (ImageView) convertView;
@@ -68,14 +73,18 @@ public class ImageAdapter extends BaseAdapter {
             holder = (ViewHolder) imageView.getTag();
         }
 
-        Picasso.
-                with(context)
-                .cancelRequest(holder.getmImage());
         Picasso
                 .with(context)
-                .load("http://image.tmdb.org/t/p/w185/" + paths.get(position))
+                .load("http://image.tmdb.org/t/p/w185/" + getItem(position))
                 .into(holder.getmImage());
         return imageView;
+    }
+
+    // method to update adapter for gridview
+    public void replace(ArrayList<String> urls) {
+        this.paths.clear();
+        this.paths.addAll(urls);
+        notifyDataSetChanged();
     }
 
 }

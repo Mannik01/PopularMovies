@@ -32,6 +32,8 @@ import java.util.prefs.PreferenceChangeListener;
  */
 public class MovieThumbNailFragment extends Fragment {
 
+    public static final String LOG_TAG = MovieThumbNailFragment.class.getSimpleName();
+
     ArrayList<String> pathList;
     ImageAdapter imageAdapter;
     GridView gridView;
@@ -46,7 +48,9 @@ public class MovieThumbNailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
+        prevSort = null;
+        pathList = new ArrayList<String>();
+        imageAdapter = new ImageAdapter(getActivity(), pathList);
         setHasOptionsMenu(true);
     }
 
@@ -56,8 +60,6 @@ public class MovieThumbNailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         gridView = (GridView) rootView.findViewById(R.id.gridView);
-        pathList = new ArrayList<String>();
-        imageAdapter = new ImageAdapter(getActivity(), pathList);
         gridView.setAdapter(imageAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -69,38 +71,36 @@ public class MovieThumbNailFragment extends Fragment {
         return rootView;
     }
 
-//    private class PreferenceChangeListener implements SharedPreferences.OnSharedPreferenceChangeListener{
-//
-//
-//        @Override
-//        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//            gridView.setAdapter(null);
-//            onStart();
-//        }
-//    }
 
     @Override
     public void onStart() {
         super.onStart();
-        populateView();
+        sortType = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_popularity));
+
     }
 
     @Override
     public void onResume() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortfield = prefs.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_popularity));
-
-        if(prevSort!=null && !sortfield.equals(prevSort)) {
-            populateView();
-        }
-        prevSort = sortfield;
+//        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        String sortfield = prefs.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_popularity));
+//
+//        if(prevSort!=null && !sortfield.equals(prevSort)) {
+//            populateView();
+//
+//        }
+//        else {
+//            prevSort = sortfield;
+//            populateView();
+//        }
+        populateView();
         super.onResume();
     }
 
     private void populateView() {
         FetchImageTask imageTask = new FetchImageTask();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortType = preferences.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_label_popularity));
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        String sortType = preferences.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_label_popularity));
         imageTask.execute(sortType);
     }
 
@@ -117,11 +117,11 @@ public class MovieThumbNailFragment extends Fragment {
             String url = "http://api.themoviedb.org/3/discover/movie/?sort_by=" + params[0] + ".desc&api_key=" + BuildConfig.THE_MOVIE_DB;
 
             try {
-                pathList.clear();
+                //pathList.clear();
                 pathList = new ArrayList<String>(Arrays.asList(getMoviesPaths(url)));
                 return pathList;
             } catch (Exception e) {
-
+                    Log.e(LOG_TAG, "Exception in doInBackground method");
             }
             return null;
         }
@@ -200,16 +200,14 @@ public class MovieThumbNailFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<String> pathsResult) {
-
-
             if (pathsResult != null && getActivity() != null) {
-                imageAdapter.notifyDataSetChanged();
-                imageAdapter = new ImageAdapter(getActivity(), pathsResult);
-                gridView = (GridView) getView().findViewById(R.id.gridView);
-                gridView.setAdapter(imageAdapter);
-//                imageAdapter.notifyDataSetChanged();
+//                imageAdapter = new ImageAdapter(getActivity(), pathsResult);
+//                gridView = (GridView) getView().findViewById(R.id.gridView);
 //                gridView.setAdapter(imageAdapter);
-            }
+                //imageAdapter.notifyDataSetChanged();
+
+                imageAdapter.replace(pathsResult);
+           }
 
         }
 
