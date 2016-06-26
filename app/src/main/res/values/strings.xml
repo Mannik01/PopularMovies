@@ -2,13 +2,8 @@
     <string name="app_name">PopularMovies</string>
     <string name="action_settings">Settings</string>
     <string name="movie_fragment_activity">MovieThumbNailFragment</string>
-    <string name="title_activity_movie_detail">MovieDetail</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="movie_name">Movie Name</string>
-    <string name="release_year">2012</string>
-    <string name="movie_length">120mins</string>
-    <string name="user_rating">8.1/10</string>
-    <string name="movie_plot">Once upon a time, there was a king. The king had a queen. They, together, had to two sons ...</string>
+
 
     <string name="pref_sort_label">Sort Movies By</string>
     <string name="pref_sort_label_popularity">Popularity</string>
